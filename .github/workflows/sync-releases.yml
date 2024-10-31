@@ -1,0 +1,26 @@
+name: Sync Releases
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to sync
+        default: wxt
+        type: choice
+        options:
+          - wxt
+          - module-react
+          - module-vue
+          - module-svelte
+          - module-solid
+          - auto-icons
+          - i18n
+
+jobs:
+  sync:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm tsx scripts/sync-releases.ts ${{ inputs.package }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

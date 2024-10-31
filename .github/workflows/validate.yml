@@ -1,0 +1,75 @@
+name: Validate
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm check
+  builds:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm buildc all
+  build-demo:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm build:all
+        working-directory: packages/wxt-demo
+      - run: pnpm wxt zip
+        working-directory: packages/wxt-demo
+  tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: oven-sh/setup-bun@v2
+      - name: pnpm test:coverage
+        run: pnpm test:coverage -- --reporter=default --reporter=hanging-process
+      - uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  windows-tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm test
+  template:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        template:
+          - react
+          - solid
+          - svelte
+          - vanilla
+          - vue
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm pack
+        working-directory: packages/wxt
+      - run: npm i
+        working-directory: templates/${{ matrix.template }}
+      - run: npm i -D ../../packages/wxt/wxt-*.tgz
+        working-directory: templates/${{ matrix.template }}
+      - run: pnpm compile
+        if: matrix.template != 'svelte'
+        working-directory: templates/${{ matrix.template }}
+      - run: pnpm check
+        if: matrix.template == 'svelte'
+        working-directory: templates/${{ matrix.template }}
+      - run: pnpm build
+        working-directory: templates/${{ matrix.template }}

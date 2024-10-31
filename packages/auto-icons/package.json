@@ -1,0 +1,60 @@
+{
+  "name": "@wxt-dev/auto-icons",
+  "description": "WXT module for automatically generating extension icons in different sizes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wxt-dev/wxt.git",
+    "directory": "packages/auto-icons"
+  },
+  "homepage": "https://github.com/wxt-dev/wxt/blob/main/packages/auto-icons/README.md",
+  "keywords": [
+    "wxt",
+    "module",
+    "icons",
+    "manifest"
+  ],
+  "author": {
+    "name": "Florian Metz",
+    "email": "me@timeraa.dev"
+  },
+  "contributors": [
+    {
+      "name": "Aaron Klinker",
+      "email": "aaronklinker1+wxt@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "1.0.2",
+  "type": "module",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "buildc -- unbuild",
+    "check": "pnpm build && check"
+  },
+  "peerDependencies": {
+    "wxt": ">=0.19.0"
+  },
+  "devDependencies": {
+    "@aklinker1/check": "^1.4.5",
+    "oxlint": "^0.9.9",
+    "publint": "^0.2.11",
+    "typescript": "^5.6.2",
+    "unbuild": "^2.0.0",
+    "wxt": "workspace:*"
+  },
+  "dependencies": {
+    "defu": "^6.1.4",
+    "fs-extra": "^11.2.0",
+    "sharp": "^0.33.5"
+  }
+}
