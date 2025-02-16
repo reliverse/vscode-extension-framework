@@ -14,11 +14,11 @@
 </p>
 
 <p align="center">
-  <span>Next-gen framework for developing web extensions.</span>
+  <span>Next-gen framework for developing VSCode extensions.</span>
   <br/>
   <span>⚡</span>
   <br/>
-  <q><i>It's like Nuxt, but for Web Extensions</i></q>
+  <q><i>It's like WXT, but for VSCode Extensions</i></q>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@
 
 ## Demo
 
-https://github.com/wxt-dev/wxt/assets/10101283/4d678939-1bdb-495c-9c36-3aa281d84c94
+<https://github.com/wxt-dev/wxt/assets/10101283/4d678939-1bdb-495c-9c36-3aa281d84c94>
 
 ## Quick Start
 
